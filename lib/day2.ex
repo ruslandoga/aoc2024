@@ -99,14 +99,9 @@ defmodule Day2 do
 
   defp dumped_safe_report?([a, b | rest], prev, dir) do
     cond do
-      dir == :inc and a < b and b - a <= 3 ->
-        dumped_safe_report?([b | rest], a, dir)
-
-      dir == :dec and a > b and a - b <= 3 ->
-        dumped_safe_report?([b | rest], a, dir)
-
-      true ->
-        safe_report?([a | rest], dir) or safe_report?([prev, b | rest], dir)
+      dir == :inc and a < b and b - a <= 3 -> dumped_safe_report?([b | rest], a, dir)
+      dir == :dec and a > b and a - b <= 3 -> dumped_safe_report?([b | rest], a, dir)
+      true -> safe_report?([a | rest], dir) or safe_report?([prev, b | rest], dir)
     end
   end
 
