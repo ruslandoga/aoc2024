@@ -78,7 +78,7 @@ defmodule Day3 do
     |> process_input()
     |> Enum.map(fn
       {:mul, a, b} -> a * b
-      _does -> 0
+      _do_or_do_not -> 0
     end)
     |> Enum.sum()
   end
@@ -96,23 +96,22 @@ defmodule Day3 do
   def part2(input) do
     input
     |> process_input()
-    |> do_mul(true, 0)
+    |> do_or_do_not_mul(_multiplier = 1, _acc = 0)
   end
 
-  defp do_mul([{:mul, l, r} | rest], enabled?, acc) do
-    result = if enabled?, do: l * r, else: 0
-    do_mul(rest, enabled?, acc + result)
+  defp do_or_do_not_mul([{:mul, l, r} | rest], multiplier, acc) do
+    do_or_do_not_mul(rest, enabled?, acc + multiplier * l * r)
   end
 
-  defp do_mul([:do | rest], _enabled?, acc) do
-    do_mul(rest, true, acc)
+  defp do_or_do_not_mul([:do | rest], _multiplier, acc) do
+    do_or_do_not_mul(rest, 1, acc)
   end
 
-  defp do_mul([:dont | rest], _enabled?, acc) do
-    do_mul(rest, false, acc)
+  defp do_or_do_not_mul([:dont | rest], _multiplier, acc) do
+    do_or_do_not_mul(rest, 0, acc)
   end
 
-  defp do_mul([], _enabled?, acc) do
+  defp do_or_do_not_mul([], _multiplier, acc) do
     acc
   end
 end
