@@ -100,7 +100,7 @@ defmodule Day3 do
   end
 
   defp do_or_do_not_mul([{:mul, l, r} | rest], multiplier, acc) do
-    do_or_do_not_mul(rest, enabled?, acc + multiplier * l * r)
+    do_or_do_not_mul(rest, multiplier, acc + multiplier * l * r)
   end
 
   defp do_or_do_not_mul([:do | rest], _multiplier, acc) do
