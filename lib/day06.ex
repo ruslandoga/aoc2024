@@ -1,10 +1,10 @@
-defmodule Day8 do
+defmodule Day6 do
   @moduledoc """
-  Solutions for https://adventofcode.com/2024/day/8
+  Solutions for https://adventofcode.com/2024/day/6
   """
 
   def input do
-    File.stream!("priv/day8.txt")
+    File.stream!("priv/day06.txt")
   end
 
   def example_input do

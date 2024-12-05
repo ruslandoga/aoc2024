@@ -4,7 +4,7 @@ defmodule Day3 do
   """
 
   def input do
-    File.read!("priv/day3.txt")
+    File.read!("priv/day03.txt")
   end
 
   def example_input do

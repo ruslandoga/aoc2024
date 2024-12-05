@@ -4,7 +4,7 @@ defmodule Day2 do
   """
 
   def input do
-    File.stream!("priv/day2.txt")
+    File.stream!("priv/day02.txt")
   end
 
   def example_input do
