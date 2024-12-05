@@ -40,16 +40,18 @@ defmodule Day5 do
     """
   end
 
-  def process_input(input) do
-    [rules, pages] = String.split(input, "\n\n")
+  @doc """
+  Solutions:
 
-    rules =
-      rules
-      |> String.split("\n", trim: true)
-      |> Enum.map(fn line ->
-        [l, r] = String.split(line, "|")
-        {String.to_integer(l), String.to_integer(r)}
-      end)
+      iex> solve(example_input())
+      {143, 123}
+
+      iex> solve(input())
+      {7074, 4828}
+
+  """
+  def solve(input \\ example_input()) do
+    [rules, pages] = String.split(input, "\n\n")
 
     pages =
       pages
@@ -58,59 +60,19 @@ defmodule Day5 do
         line |> String.split(",") |> Enum.map(&String.to_integer/1)
       end)
 
-    {rules, pages}
-  end
-
-  @doc """
-  Solutions:
-
-      iex> part1(example_input())
-      143
-
-      iex> part1(input())
-      7074
-
-  """
-  def part1(input \\ example_input()) do
-    {rules, pages} = process_input(input)
-
-    pages
-    |> Enum.filter(fn page ->
-      page ==
+    Enum.reduce(pages, {0, 0}, fn page, {p1, p2} ->
+      sorted =
         Enum.sort_by(page, &Function.identity/1, fn l, r ->
-          Enum.any?(rules, fn {rl, rr} -> rl == l and rr == r end)
+          String.contains?(rules, "#{l}|#{r}")
         end)
+
+      mid = Enum.at(sorted, div(length(sorted), 2))
+
+      if page == sorted do
+        {p1 + mid, p2}
+      else
+        {p1, p2 + mid}
+      end
     end)
-    |> Enum.map(fn page -> Enum.at(page, div(length(page), 2)) end)
-    |> Enum.sum()
-  end
-
-  @doc """
-  Solutions:
-
-      iex> part2(example_input())
-      123
-
-      iex> part2(input())
-      4828
-
-  """
-  def part2(input) do
-    {rules, pages} = process_input(input)
-
-    pages
-    |> Enum.reject(fn page ->
-      page ==
-        Enum.sort_by(page, &Function.identity/1, fn l, r ->
-          Enum.any?(rules, fn {rl, rr} -> rl == l and rr == r end)
-        end)
-    end)
-    |> Enum.map(fn page ->
-      Enum.sort_by(page, &Function.identity/1, fn l, r ->
-        Enum.any?(rules, fn {rl, rr} -> rl == l and rr == r end)
-      end)
-    end)
-    |> Enum.map(fn page -> Enum.at(page, div(length(page), 2)) end)
-    |> Enum.sum()
   end
 end
