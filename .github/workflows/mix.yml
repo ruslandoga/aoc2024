@@ -6,7 +6,7 @@ on:
     branches: [master]
 
 jobs:
-  mix:
+  test:
     runs-on: ubuntu-latest
 
     env:
